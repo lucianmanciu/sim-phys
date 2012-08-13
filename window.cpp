@@ -44,8 +44,8 @@
 
 Window::Window()
 {
-    createControls(tr("Controls"));
     createSimulation(tr("Simulation"));
+    createControls(tr("Controls"));
 
     QHBoxLayout *layout = new QHBoxLayout;
     layout->addWidget(simulationTemp);
@@ -80,13 +80,20 @@ void Window::createControls(const QString &title)
     sortCombo->addItem(tr("W"));
     sortCombo->addItem(tr("T"));
 
+    outputTextEdit = new QTextEdit;
+
     QGridLayout *controlsLayout = new QGridLayout;
     controlsLayout->addWidget(quantityLabel, 0, 0);
+    controlsLayout->addWidget(quantityLabel, 5, 0);
     controlsLayout->addWidget(weightLabel, 0, 3);
+    controlsLayout->addWidget(weightLabel, 5, 1);
     controlsLayout->addWidget(temperatureLabel, 1, 0);
+    controlsLayout->addWidget(temperatureLabel, 5, 2);
     controlsLayout->addWidget(xLabel, 1, 1, 3, 2);
     controlsLayout->addWidget(pressureLabel, 2, 0);
+    controlsLayout->addWidget(pressureLabel, 5, 3);
     controlsLayout->addWidget(volumeLabel, 3, 0);
+    controlsLayout->addWidget(volumeLabel, 5, 4);
     controlsLayout->addWidget(quantityLineEdit, 0, 1);
     controlsLayout->addWidget(weightLineEdit, 0, 4);
     controlsLayout->addWidget(temperatureLineEdit, 1, 1);
@@ -96,6 +103,7 @@ void Window::createControls(const QString &title)
     controlsLayout->addWidget(simulateButton, 4, 0);
     controlsLayout->addWidget(abortButton, 4, 2);
     controlsLayout->addWidget(sortButton, 4, 4);
+    controlsLayout->addWidget(outputTextEdit, 6, 6, 0, 5);
     controlsGroup->setLayout(controlsLayout);
 }
 
