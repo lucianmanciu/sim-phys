@@ -40,106 +40,66 @@
 
 #include <QtGui>
 
-#include "slidersgroup.h"
 #include "window.h"
 
-//! [0]
 Window::Window()
 {
-    horizontalSliders = new SlidersGroup(Qt::Horizontal, tr("Horizontal"));
-    verticalSliders = new SlidersGroup(Qt::Vertical, tr("Vertical"));
-
-    stackedWidget = new QStackedWidget;
-    stackedWidget->addWidget(horizontalSliders);
-    stackedWidget->addWidget(verticalSliders);
-
     createControls(tr("Controls"));
-//! [0]
-
-//! [1]
-    connect(horizontalSliders, SIGNAL(valueChanged(int)),
-//! [1] //! [2]
-            verticalSliders, SLOT(setValue(int)));
-    connect(verticalSliders, SIGNAL(valueChanged(int)),
-            valueSpinBox, SLOT(setValue(int)));
-    connect(valueSpinBox, SIGNAL(valueChanged(int)),
-            horizontalSliders, SLOT(setValue(int)));
+    createSimulation(tr("Simulation"));
 
     QHBoxLayout *layout = new QHBoxLayout;
+    layout->addWidget(simulationTemp);
     layout->addWidget(controlsGroup);
-    layout->addWidget(stackedWidget);
     setLayout(layout);
-
-    minimumSpinBox->setValue(0);
-    maximumSpinBox->setValue(20);
-    valueSpinBox->setValue(5);
-
-    setWindowTitle(tr("Sliders"));
+    setWindowTitle(tr("Simulated Physics"));
 }
-//! [2]
 
-//! [3]
 void Window::createControls(const QString &title)
-//! [3] //! [4]
 {
     controlsGroup = new QGroupBox(title);
 
-    minimumLabel = new QLabel(tr("Quantity:"));
-    maximumLabel = new QLabel(tr("Maximum value:"));
-    valueLabel = new QLabel(tr("Current value:"));
+    quantityLabel = new QLabel(tr("Quantity:"));
+    weightLabel = new QLabel(tr("Weight:"));
+    temperatureLabel = new QLabel(tr("Temperature:"));
+    pressureLabel = new QLabel(tr("Pressure:"));
+    volumeLabel = new QLabel(tr("Volume:"));
 
-    invertedAppearance = new QCheckBox(tr("Inverted appearance"));
-    invertedKeyBindings = new QCheckBox(tr("Inverted key bindings"));
+    quantityLineEdit = new QLineEdit;
+    weightLineEdit = new QLineEdit;
+    temperatureLineEdit = new QLineEdit;
 
-//! [4] //! [5]
-    minimumSpinBox = new QSpinBox;
-//! [5] //! [6]
-    minimumSpinBox->setRange(-100, 100);
-    minimumSpinBox->setSingleStep(1);
+    pressureSlider = new QSlider;
+    volumeSlider = new QSlider;
 
-    maximumSpinBox = new QSpinBox;
-    maximumSpinBox->setRange(-100, 100);
-    maximumSpinBox->setSingleStep(1);
+    simulateButton = new QPushButton;
+    abortButton = new QPushButton;
+    sortButton = new QPushButton;
 
-    valueSpinBox = new QSpinBox;
-    valueSpinBox->setRange(-100, 100);
-    valueSpinBox->setSingleStep(1);
-
-    orientationCombo = new QComboBox;
-    orientationCombo->addItem(tr("Horizontal slider-like widgets"));
-    orientationCombo->addItem(tr("Vertical slider-like widgets"));
-
-//! [6] //! [7]
-    connect(orientationCombo, SIGNAL(activated(int)),
-//! [7] //! [8]
-            stackedWidget, SLOT(setCurrentIndex(int)));
-    connect(minimumSpinBox, SIGNAL(valueChanged(int)),
-            horizontalSliders, SLOT(setMinimum(int)));
-    connect(minimumSpinBox, SIGNAL(valueChanged(int)),
-            verticalSliders, SLOT(setMinimum(int)));
-    connect(maximumSpinBox, SIGNAL(valueChanged(int)),
-            horizontalSliders, SLOT(setMaximum(int)));
-    connect(maximumSpinBox, SIGNAL(valueChanged(int)),
-            verticalSliders, SLOT(setMaximum(int)));
-    connect(invertedAppearance, SIGNAL(toggled(bool)),
-            horizontalSliders, SLOT(invertAppearance(bool)));
-    connect(invertedAppearance, SIGNAL(toggled(bool)),
-            verticalSliders, SLOT(invertAppearance(bool)));
-    connect(invertedKeyBindings, SIGNAL(toggled(bool)),
-            horizontalSliders, SLOT(invertKeyBindings(bool)));
-    connect(invertedKeyBindings, SIGNAL(toggled(bool)),
-            verticalSliders, SLOT(invertKeyBindings(bool)));
+    sortCombo = new QComboBox;
+    sortCombo->addItem(tr("Q"));
+    sortCombo->addItem(tr("W"));
+    sortCombo->addItem(tr("T"));
 
     QGridLayout *controlsLayout = new QGridLayout;
-    controlsLayout->addWidget(minimumLabel, 0, 0);
-    controlsLayout->addWidget(maximumLabel, 1, 0);
-    controlsLayout->addWidget(valueLabel, 2, 0);
-    controlsLayout->addWidget(minimumSpinBox, 0, 1);
-    controlsLayout->addWidget(maximumSpinBox, 1, 1);
-    controlsLayout->addWidget(valueSpinBox, 2, 1);
-    controlsLayout->addWidget(invertedAppearance, 0, 2);
-    controlsLayout->addWidget(invertedKeyBindings, 1, 2);
-    controlsLayout->addWidget(orientationCombo, 3, 0, 1, 3);
+    controlsLayout->addWidget(quantityLabel, 0, 0);
+    controlsLayout->addWidget(weightLabel, 0, 3);
+    controlsLayout->addWidget(temperatureLabel, 1, 0);
+    controlsLayout->addWidget(xLabel, 1, 1, 3, 2);
+    controlsLayout->addWidget(pressureLabel, 2, 0);
+    controlsLayout->addWidget(volumeLabel, 3, 0);
+    controlsLayout->addWidget(quantityLineEdit, 0, 1);
+    controlsLayout->addWidget(weightLineEdit, 0, 4);
+    controlsLayout->addWidget(temperatureLineEdit, 1, 1);
+    controlsLayout->addWidget(pressureSlider, 2, 1, 1, 4);
+    controlsLayout->addWidget(volumeSlider, 3, 1, 1, 4);
+    controlsLayout->addWidget(sortCombo, 4, 3);
+    controlsLayout->addWidget(simulateButton, 4, 0);
+    controlsLayout->addWidget(abortButton, 4, 2);
+    controlsLayout->addWidget(sortButton, 4, 4);
     controlsGroup->setLayout(controlsLayout);
 }
-//! [8]
+
+void Window::createSimulation(const QString &title)
+{
+    simulationTemp = new QGroupBox(title);
+}

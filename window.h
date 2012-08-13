@@ -44,14 +44,15 @@
 #include <QWidget>
 
 QT_BEGIN_NAMESPACE
-class QCheckBox;
 class QComboBox;
 class QGroupBox;
 class QLabel;
-class QSpinBox;
+class QLineEdit;
+class QPushButton;
+class QTextEdit;
 class QStackedWidget;
+class QSlider;
 QT_END_NAMESPACE
-class SlidersGroup;
 
 //! [0]
 class Window : public QWidget
@@ -63,22 +64,26 @@ public:
 
 private:
     void createControls(const QString &title);
+    void createSimulation(const QString &title);
 
-    SlidersGroup *horizontalSliders;
-    SlidersGroup *verticalSliders;
-    QStackedWidget *stackedWidget;
-
+    QSlider *pressureSlider;
+    QSlider *volumeSlider;
     QGroupBox *controlsGroup;
-    QLabel *minimumLabel;
-    QLabel *maximumLabel;
-    QLabel *valueLabel;
-    QCheckBox *invertedAppearance;
-    QCheckBox *invertedKeyBindings;
-    QSpinBox *minimumSpinBox;
-    QSpinBox *maximumSpinBox;
-    QSpinBox *valueSpinBox;
-    QComboBox *orientationCombo;
+    QGroupBox *simulationTemp;
+    QLabel *quantityLabel;
+    QLabel *weightLabel;
+    QLabel *temperatureLabel;
+    QLabel *pressureLabel;
+    QLabel *volumeLabel;
+    QLabel *xLabel;
+    QLineEdit *quantityLineEdit;
+    QLineEdit *weightLineEdit;
+    QLineEdit *temperatureLineEdit;
+    QTextEdit *outputTextEdit;
+    QPushButton *simulateButton;
+    QPushButton *abortButton;
+    QPushButton *sortButton;
+    QComboBox *sortCombo;
 };
-//! [0]
 
 #endif

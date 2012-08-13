@@ -1,7 +1,6 @@
-HEADERS     = slidersgroup.h \
+HEADERS     = \
               window.h
 SOURCES     = main.cpp \
-              slidersgroup.cpp \
               window.cpp
 
 # install
