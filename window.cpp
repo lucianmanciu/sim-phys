@@ -63,6 +63,7 @@ void Window::createControls(const QString &title)
     temperatureLabel = new QLabel(tr("Temperature:"));
     pressureLabel = new QLabel(tr("Pressure:"));
     volumeLabel = new QLabel(tr("Volume:"));
+    xLabel = new QLabel(tr("X - >"));
 
     quantityLineEdit = new QLineEdit;
     weightLineEdit = new QLineEdit;
